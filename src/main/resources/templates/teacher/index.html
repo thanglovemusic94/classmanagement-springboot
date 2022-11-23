@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>TeacherManagement</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrapper{
+            max-width: 900px;
+            margin: 20px auto;
+            display: flex;
+        }
+        h3{
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        h5{
+            color: green;
+            padding-bottom: 10px;
+        }
+        .col-6{
+            flex: 1;
+        }
+
+        td, th{
+            padding: 2px 16px;
+        }
+
+        table, th, td {
+            border: 1px solid coral;
+            border-collapse: collapse;
+        }
+
+        form input{
+            width: 100%;
+            outline-width: 0;
+            border: 1px solid coral;
+        }
+
+        .text-red{
+            color: red;
+        }
+        .text-center{
+            text-align: center;
+        }
+
+        button{
+            border: none;
+            background: coral;
+            color: white;
+            padding: 2px 8px;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 2px 8px;
+            display: inline-block;
+            border: 1px solid coral;
+        }
+
+
+    </style>
+
+
+</head>
+<body>
+<h3>Teacher Management</h3>
+    <div class="wrapper">
+        <div class="col-6">
+            <h5>
+                <th:block th:if="${teacher.id == 0}">
+                    Add New Teacher
+                </th:block>
+
+                <th:block th:if="${teacher.id > 0}">
+                    Edit Teacher name is <span class="text-red" th:text="${teacher.name}"></span>
+                </th:block>
+            </h5>
+            <form th:action="@{/teacher/add}" th:method="post" th:object="${teacher}" id="form">
+                <table>
+                    <tr class="form-group" hidden>
+                        <td>
+                            <input th:value="${teacher.id}"  name="id" />
+                        </td>
+                    </tr>
+                    <tr class="form-group">
+                        <td>
+                            <label>Name</label>
+                        </td>
+                        <td>
+                            <input th:field="*{name}" type="text" id="title" name="title" class="form-control" required>
+                        </td>
+                    </tr>
+                    <tr class="form-group">
+                        <td>
+                            <label>Age</label>
+                        </td>
+                        <td>
+                            <input th:field="*{age}" type="number" id="age" name="age" min="18" max="100" class="form-control" required>
+                        </td>
+                    </tr>
+
+                    <tr class="form-group">
+                        <td colspan="2" class="text-center">
+                            <button type="submit" class="btn btn-success btn-sm" >Submit</button>
+                        </td>
+                    </tr>
+
+                </table>
+
+
+            </form>
+
+
+        </div>
+        <div class="col-6">
+            <table >
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Action</th>
+                </tr>
+
+                <tbody>
+                    <tr th:each="t : ${teachers}" th:if="${teachers.size() > 0}">
+                        <td th:text="${t.id}"></td>
+                        <td th:text="${t.name}"></td>
+                        <td th:text="${t.age}"></td>
+                        <td>
+                            <a th:href="@{/teacher/edit/{id}(id=${t.getId()})}"
+                               class="btn btn-yellow"><i class="fas fa-edit"></i><span>Edit</span></a> <span>|</span>
+                            <a th:href="@{/teacher/delete/{id}(id=${t.getId()})}"
+                               class="btn btn-danger"><i class="fas fa-trash"></i><span >delete</span></a>
+                        </td>
+                    </tr>
+                    <tr th:if="${teachers.size() == 0}">
+                        <td colspan="4">No content</td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+<div>
+    <button class="text-center" onclick="goBack()">Back</button>
+</div>
+<!-- Javascript -->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const teacher = /*[[${teacher}]]*/ 'default';
+    // console.log(teacher)
+    if (teacher.id != 0){
+        document.getElementById("form").setAttribute("action", "/teacher/edit");
+    }
+
+    function goBack(){
+        window.location.href = "/";
+    }
+
+    /*]]>*/
+</script>
+</body>
+</html>

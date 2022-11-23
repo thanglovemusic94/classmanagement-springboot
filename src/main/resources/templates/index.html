@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Management</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrapper{
+            max-width: 900px;
+            margin: 20px auto;
+            display: flex;
+        }
+        h3{
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        h5{
+            color: green;
+            padding-bottom: 10px;
+        }
+        .col-6{
+            flex: 1;
+        }
+
+        td, th{
+            padding: 2px 16px;
+        }
+
+        table, th, td {
+            border: 1px solid coral;
+            border-collapse: collapse;
+        }
+
+        form input, form select{
+            width: 100%;
+            outline-width: 0;
+            border: 1px solid coral;
+        }
+
+        .text-red{
+            color: red;
+        }
+        .text-center{
+            text-align: center;
+        }
+
+        button{
+            border: none;
+            background: coral;
+            color: white;
+            padding: 2px 8px;
+        }
+
+        a {
+            text-decoration: none;
+            padding: 2px 8px;
+            display: inline-block;
+            border: 1px solid coral;
+        }
+
+        ul{
+            list-style-type: none;
+        }
+        ul li a {
+            text-decoration: none;
+            padding: 2px 8px;
+            display: inline-block;
+            border: 1px solid black;
+            background: black;
+            color: white;
+            font-style: italic;
+            font-weight: bold;
+
+        }
+
+        ul li a :hover{
+            border: 1px solid coral;
+            background: coral;
+        }
+    </style>
+</head>
+<body>
+<h3 class="text-center">Dashboard</h3>
+
+    <ul class="text-center">
+        <li>
+            <a href="/teacher">Teacher Management</a> |
+            <a href="/room">Room Management</a> |
+            <a href="/major">Major Management</a>
+
+        </li>
+    </ul>
+
+<h3>Class Management</h3>
+<div class="wrapper">
+    <div class="col-6">
+        <h5>
+            <th:block th:if="${classEntity.id == 0}">
+                Add New classEntity
+            </th:block>
+
+            <th:block th:if="${classEntity.id > 0}">
+                Edit classEntity name is <span class="text-red" th:text="${classEntity.name}"></span>
+            </th:block>
+        </h5>
+        <form th:action="@{/add}" th:method="post" th:object="${classEntity}" id="form">
+            <table>
+                <tr class="form-group" hidden>
+                    <td>
+                        <input th:value="${classEntity.id}"  name="id" />
+                    </td>
+                </tr>
+
+                <tr class="form-group">
+                    <td>
+                        <label>Name</label>
+                    </td>
+                    <td>
+                        <input th:field="*{name}" type="text" id="name" name="name" class="form-control" required>
+                    </td>
+                </tr>
+
+                <tr class="form-group">
+                    <td>
+                        <label>Majors</label>
+                    </td>
+                    <td>
+                        <select th:field="*{majors}" >
+                            <option value="" selected disabled hidden>Choose here</option>
+                            <option th:each="m : ${majors}"
+                                    th:value="${m.id}" th:text="${m.name}"></option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr class="form-group">
+                    <td>
+                        <label>Teachers</label>
+                    </td>
+                    <td>
+                        <select th:field="*{teacher}" >
+                            <option value="" selected disabled hidden>Choose here</option>
+                            <option th:each="t : ${teachers}"
+                                    th:value="${t.id}" th:text="${t.name}"></option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr class="form-group">
+                    <td>
+                        <label>Rooms</label>
+                    </td>
+                    <td>
+                        <select th:field="*{room}" >
+                            <option value="" selected disabled hidden>Choose here</option>
+                            <option th:each="r : ${rooms}"
+                                    th:value="${r.id}" th:text="${r.name}"></option>
+                        </select>
+                    </td>
+                </tr>
+
+
+                <tr class="form-group">
+                    <td colspan="2" class="text-center">
+                        <button type="submit" class="btn btn-success btn-sm" >Submit</button>
+                    </td>
+                </tr>
+
+            </table>
+
+
+        </form>
+
+
+    </div>
+    <div class="col-6">
+        <table >
+            <tr>
+                <th>Name Class</th>
+                <th>Name Major</th>
+                <th>Name Teacher</th>
+                <th>Name Room</th>
+                <th>Action</th>
+            </tr>
+
+            <tbody>
+            <tr th:each="t : ${classEntitys}" th:if="${classEntitys.size() > 0}">
+                <td th:text="${t.name}"></td>
+                <td th:text="${t.majors.name}"></td>
+                <td th:text="${t.teacher.name}"></td>
+                <td th:text="${t.room.name}"></td>
+                <td>
+                    <a th:href="@{/edit/{id}(id=${t.getId()})}"
+                       class="btn btn-yellow"><i class="fas fa-edit"></i><span>Edit</span></a> <span>|</span>
+                    <a th:href="@{/delete/{id}(id=${t.getId()})}"
+                       class="btn btn-danger"><i class="fas fa-trash"></i><span >delete</span></a>
+                </td>
+            </tr>
+            <tr th:if="${classEntitys.size() == 0}">
+                <td colspan="4">No content</td>
+            </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>
