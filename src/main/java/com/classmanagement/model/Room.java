@@ -1,8 +1,6 @@
 package com.classmanagement.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -20,5 +18,7 @@ public class Room {
     private String capacity;
 
     @OneToMany(mappedBy="room")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<ClassEntity> classEntities;
 }

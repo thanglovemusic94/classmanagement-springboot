@@ -1,8 +1,6 @@
 package com.classmanagement.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,5 +17,7 @@ public class Majors {
     private String name;
 
     @OneToMany(mappedBy="majors")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<ClassEntity> classEntities;
 }
