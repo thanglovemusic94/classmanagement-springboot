@@ -71,17 +71,19 @@
 </head>
 <body>
 <h3>Room Management</h3>
+
+<h5 class="wrapper">
+  <th:block th:if="${room.id == 0}">
+    Add New Room
+  </th:block>
+
+  <th:block th:if="${room.id > 0}">
+    Edit Room name is <span class="text-red" th:text="${room.name}"></span>
+  </th:block>
+</h5>
 <div class="wrapper">
   <div class="col-6">
-    <h5>
-      <th:block th:if="${room.id == 0}">
-        Add New Room
-      </th:block>
 
-      <th:block th:if="${room.id > 0}">
-        Edit Room name is <span class="text-red" th:text="${room.name}"></span>
-      </th:block>
-    </h5>
     <form th:action="@{/room/add}" th:method="post" th:object="${room}" id="form">
       <table>
         <tr class="form-group" hidden>

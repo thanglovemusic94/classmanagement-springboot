@@ -13,12 +13,12 @@
 
         .wrapper{
             max-width: 900px;
-            margin: 20px auto;
+            margin: 10px auto;
             display: flex;
         }
         h3{
             text-align: center;
-            padding-bottom: 10px;
+            margin-top: 30px;
         }
 
         h5{
@@ -99,17 +99,19 @@
     </ul>
 
 <h3>Class Management</h3>
-<div class="wrapper">
-    <div class="col-6">
-        <h5>
-            <th:block th:if="${classEntity.id == 0}">
-                Add New classEntity
-            </th:block>
+<h5 class="wrapper">
+    <th:block th:if="${classEntity.id == 0}">
+        Add New classEntity
+    </th:block>
 
-            <th:block th:if="${classEntity.id > 0}">
-                Edit classEntity name is <span class="text-red" th:text="${classEntity.name}"></span>
-            </th:block>
-        </h5>
+    <th:block th:if="${classEntity.id > 0}">
+        Edit classEntity name is <span class="text-red" th:text="${classEntity.name}"></span>
+    </th:block>
+</h5>
+<div class="wrapper">
+
+    <div class="" style="margin-right: 20px">
+
         <form th:action="@{/add}" th:method="post" th:object="${classEntity}" id="form">
             <table>
                 <tr class="form-group" hidden>
@@ -180,14 +182,14 @@
 
 
     </div>
-    <div class="col-6">
+    <div class="">
         <table >
             <tr>
                 <th>Name Class</th>
                 <th>Name Major</th>
                 <th>Name Teacher</th>
                 <th>Name Room</th>
-                <th>Action</th>
+                <th width="150px">Action</th>
             </tr>
 
             <tbody>

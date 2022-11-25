@@ -71,17 +71,18 @@
 </head>
 <body>
 <h3>major Management</h3>
+<h5 class="wrapper">
+  <th:block th:if="${major.id == 0}">
+    Add New major
+  </th:block>
+
+  <th:block th:if="${major.id > 0}">
+    Edit major name is <span class="text-red" th:text="${major.name}"></span>
+  </th:block>
+</h5>
 <div class="wrapper">
   <div class="col-6">
-    <h5>
-      <th:block th:if="${major.id == 0}">
-        Add New major
-      </th:block>
 
-      <th:block th:if="${major.id > 0}">
-        Edit major name is <span class="text-red" th:text="${major.name}"></span>
-      </th:block>
-    </h5>
     <form th:action="@{/major/add}" th:method="post" th:object="${major}" id="form">
       <table>
         <tr class="form-group" hidden>

@@ -71,17 +71,19 @@
 </head>
 <body>
 <h3>Teacher Management</h3>
+
+<h5 class="wrapper">
+    <th:block th:if="${teacher.id == 0}">
+        Add New Teacher
+    </th:block>
+
+    <th:block th:if="${teacher.id > 0}">
+        Edit Teacher name is <span class="text-red" th:text="${teacher.name}"></span>
+    </th:block>
+</h5>
     <div class="wrapper">
         <div class="col-6">
-            <h5>
-                <th:block th:if="${teacher.id == 0}">
-                    Add New Teacher
-                </th:block>
 
-                <th:block th:if="${teacher.id > 0}">
-                    Edit Teacher name is <span class="text-red" th:text="${teacher.name}"></span>
-                </th:block>
-            </h5>
             <form th:action="@{/teacher/add}" th:method="post" th:object="${teacher}" id="form">
                 <table>
                     <tr class="form-group" hidden>
